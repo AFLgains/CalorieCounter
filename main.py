@@ -1,10 +1,6 @@
 import os
-import pandas 
 import streamlit as st
 import streamlit_authenticator as stauth
-import yaml
-from yaml.loader import SafeLoader
-import openai
 from openai import OpenAI
 from dotenv import load_dotenv
 import base64
