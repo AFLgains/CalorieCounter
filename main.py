@@ -27,7 +27,7 @@ if 'disable_picture' not in st.session_state:
     st.session_state['disable_picture'] = True
 
 
-# TODO: Ensure this is loadedfrom a database instead
+# Load from the user database
 connection_string = os.environ["CONNECTION_STRING"]
 table_client  = TableClient.from_connection_string(conn_str=connection_string,table_name = "userdetails")
 user_entities = table_client.list_entities()
@@ -78,7 +78,7 @@ if authentication_status:
                             "role": "user",
                             "content": [
                                 {"type": "text", 
-                                "text": "Additional Details: {details}. Estimate the calories and macronutrient breakdown. "},
+                                "text": "Additional Details: {details}. Estimate the calories and macronutrient (protien, fats and carbs) breakdown. "},
                                 {
                                     "type": "image_url",
                                     "image_url": f"data:image/jpeg;base64,{encode_image(picture)}",
@@ -88,8 +88,14 @@ if authentication_status:
                     ],
                     max_tokens=300,
                 )
+                #TODO:
+            #Save the responses
+            #Track calories
 
             st.write(response.choices[0].message.content)
+            st.button("Save to my food diary")
+
+
 
 elif authentication_status == False:
     st.error('Username/password is incorrect')
